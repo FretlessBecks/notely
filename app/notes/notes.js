@@ -21,8 +21,11 @@
       });
   }
 
-  NotesController['$inject'] = ['$scope', '$state'];
-  function NotesController($scope, $state) {
+  NotesController['$inject'] = ['$scope', '$state', 'notes'];
+  function NotesController($scope, $state, notesService) {
+    notesService.fetchNotes(function() {
+      console.log('Callback!');
+    });
     $state.go('notes.form');
   }
 })();
