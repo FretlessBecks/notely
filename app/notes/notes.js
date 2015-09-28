@@ -23,8 +23,8 @@
 
   NotesController['$inject'] = ['$scope', '$state', 'notes'];
   function NotesController($scope, $state, notesService) {
-    notesService.fetchNotes(function() {
-      console.log('Callback!');
+    notesService.fetchNotes(function(notes) {
+      $scope.notes = notes;
     });
     $state.go('notes.form');
   }
