@@ -15,9 +15,11 @@
     }
 
     this.findById = function(noteId) {
-      return ($filter('filter')(notes, {
+      var note = ($filter('filter')(notes, {
         id: parseInt(noteId)
       }, true)[0] || {});
+
+      return angular.copy(note);
     }
 
     this.fetchNotes = function(callback) {
@@ -28,6 +30,16 @@
             callback(notes);
           }
         });
+    };
+
+    this.replaceNote = function(note) {
+      for (var i = 0; i < notes.length; i++) {
+        if (notes[i].id === note.id) {
+          notes.splice(i, 1);
+          notes.unshift(note);
+          break;
+        }
+      }
     };
 
     this.create = function(note) {
@@ -45,12 +57,15 @@
     }
 
     this.update = function(note) {
-      $http.put(nevernoteBasePath + 'notes/' + note.id, {
+      var self = this;
+      return $http.put(nevernoteBasePath + 'notes/' + note.id, {
         api_key: user.apiKey,
         note: {
           title: note.title,
           body_html: note.body_html
         }
+      }).success(function(noteData) {
+        self.replaceNote(noteData.note);
       });
     }
   }

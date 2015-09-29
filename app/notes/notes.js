@@ -34,7 +34,9 @@
     $scope.note = notes.findById($state.params.noteId);
     $scope.save = function() {
       if ($scope.note.id) {
-        notes.update($scope.note);
+        notes.update($scope.note).success(function(data) {
+          $scope.note = data.note;
+        });
       }
       else {
         notes.create($scope.note);
