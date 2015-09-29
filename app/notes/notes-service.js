@@ -22,13 +22,10 @@
       return angular.copy(note);
     }
 
-    this.fetchNotes = function(callback) {
-      $http.get(nevernoteBasePath + 'notes?api_key=' + user.apiKey)
+    this.fetchNotes = function() {
+      return $http.get(nevernoteBasePath + 'notes?api_key=' + user.apiKey)
         .success(function(notesData) {
           notes = notesData;
-          if (callback) {
-            callback(notes);
-          }
         });
     };
 
