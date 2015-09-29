@@ -51,5 +51,11 @@
         notes.create($scope.note);
       }
     }
+    $scope.delete = function() {
+      notes.delete($scope.note)
+      .success(function() {
+        $state.go('notes.form', { noteId: undefined });
+      });
+    }
   }
 })();
