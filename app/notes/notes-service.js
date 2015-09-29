@@ -2,8 +2,8 @@
   angular.module('notely.notes.service', [])
     .service('notes', notesService);
 
-  notesService['$inject'] = ['$http'];
-  function notesService($http) {
+  notesService['$inject'] = ['$http', '$filter'];
+  function notesService($http, $filter) {
     var notes = [];
     var nevernoteBasePath = 'https://nevernote-1150.herokuapp.com/api/v1/';
     var user = {
@@ -15,12 +15,9 @@
     }
 
     this.findById = function(noteId) {
-      for (var i = 0; i < notes.length; i++) {
-        if (notes[i].id.toString() === noteId) {
-          return notes[i];
-        }
-      }
-      return {};
+      return ($filter('filter')(notes, {
+        id: parseInt(noteId)
+      }, true)[0] || {});
     }
 
     this.fetchNotes = function(callback) {
