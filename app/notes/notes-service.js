@@ -10,6 +10,19 @@
       apiKey: '$2a$10$3UAODMts8D3bK8uqwe2mF.F39vZD3/CypYXLUk1yvhpedfbMiBaFW'
     }
 
+    this.all = function() {
+      return notes;
+    }
+
+    this.findById = function(noteId) {
+      for (var i = 0; i < notes.length; i++) {
+        if (notes[i].id.toString() === noteId) {
+          return notes[i];
+        }
+      }
+      return {};
+    }
+
     this.fetchNotes = function(callback) {
       $http.get(nevernoteBasePath + 'notes?api_key=' + user.apiKey)
         .success(function(notesData) {
