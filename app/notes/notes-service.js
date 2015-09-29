@@ -30,7 +30,7 @@
         });
     };
 
-    this.save = function(note) {
+    this.create = function(note) {
       $http.post(nevernoteBasePath + 'notes', {
         api_key: user.apiKey,
         note: {
@@ -41,7 +41,16 @@
         .success(function(noteData) {
           notes.unshift(noteData.note);
         });
+    }
 
+    this.update = function(note) {
+      $http.put(nevernoteBasePath + 'notes/' + note.id, {
+        api_key: user.apiKey,
+        note: {
+          title: note.title,
+          body_html: note.body_html
+        }
+      });
     }
   }
 })();
