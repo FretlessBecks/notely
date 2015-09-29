@@ -29,5 +29,19 @@
           }
         });
     };
+
+    this.save = function(note) {
+      $http.post(nevernoteBasePath + 'notes', {
+        api_key: user.apiKey,
+        note: {
+          title: note.title,
+          body_html: note.body_html
+        }
+      })
+        .success(function(noteData) {
+          notes.unshift(noteData.note);
+        });
+
+    }
   }
 })();
