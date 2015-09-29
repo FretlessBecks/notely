@@ -27,6 +27,5 @@
     notesService.fetchNotes(function(notes) {
       $scope.notes = notes;
     });
-    $state.go('notes.form');
   }
 })();
