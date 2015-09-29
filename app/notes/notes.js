@@ -32,6 +32,12 @@
   NotesFormController['$inject'] = ['$scope', '$state', 'notes'];
   function NotesFormController($scope, $state, notes) {
     $scope.note = notes.findById($state.params.noteId);
+    $scope.buttonText = function() {
+      if ($scope.note.id) {
+        return 'Save Changes';
+      }
+      return 'Create Note';
+    }
     $scope.save = function() {
       if ($scope.note.id) {
         notes.update($scope.note).success(function(data) {
