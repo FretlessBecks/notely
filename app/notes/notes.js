@@ -11,12 +11,13 @@
 
       .state('notes', {
         url: '/notes',
+        abstract: true,
         templateUrl: '/notes/notes.html',
         controller: NotesController
       })
 
       .state('notes.form', {
-        url: '/:noteId',
+        url: '/{noteId}',
         templateUrl: '/notes/notes-form.html'
       });
   }

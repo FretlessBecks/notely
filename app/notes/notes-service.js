@@ -14,7 +14,6 @@
       $http.get(nevernoteBasePath + 'notes?api_key=' + user.apiKey)
         .success(function(notesData) {
           notes = notesData;
-
           if (callback) {
             callback(notes);
           }
