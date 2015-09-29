@@ -36,7 +36,7 @@
       if ($scope.note.id) {
         return 'Save Changes';
       }
-      return 'Create Note';
+      return 'Save';
     }
     $scope.save = function() {
       if ($scope.note.id) {
