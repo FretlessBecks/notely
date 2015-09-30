@@ -33,8 +33,7 @@
             return deferred.promise;
           }
         },
-        templateUrl: '/notes/notes.html',
-        controller: NotesController
+        templateUrl: '/notes/notes.html'
       })
 
       .state('notes.form', {
@@ -42,11 +41,6 @@
         templateUrl: '/notes/notes-form.html',
         controller: NotesFormController
       });
-  }
-
-  NotesController['$inject'] = ['$scope', '$state', 'notes'];
-  function NotesController($scope, $state, notes) {
-    $scope.notes = notes.all();
   }
 
   NotesFormController['$inject'] = ['$scope', '$state', 'notes'];
