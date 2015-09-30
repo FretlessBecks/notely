@@ -6,13 +6,13 @@
   function CurrentUser($window) {
     var currentUser = JSON.parse($window.localStorage.getItem('currentUser'));
 
-    this.set = function(token) {
-      currentUser = token;
+    this.set = function(user) {
+      currentUser = user;
       $window.localStorage.setItem('currentUser', JSON.stringify(currentUser));
     }
 
     this.get = function() {
-      return currentUser;
+      return currentUser || {};
     }
 
     this.clear = function() {
