@@ -2,10 +2,9 @@
   angular.module('notely.notes.service', [])
     .service('notes', notesService);
 
-  notesService['$inject'] = ['$http', '$filter', '$state'];
-  function notesService($http, $filter, $state) {
+  notesService['$inject'] = ['$http', '$filter', '$state', 'constants'];
+  function notesService($http, $filter, $state, constants) {
     var notes = [];
-    var nevernoteBasePath = 'https://nevernote-1150.herokuapp.com/api/v1/';
     var user = {
       apiKey: '$2a$10$3UAODMts8D3bK8uqwe2mF.F39vZD3/CypYXLUk1yvhpedfbMiBaFW'
     }
@@ -23,7 +22,7 @@
     };
 
     this.fetchNotes = function() {
-      return $http.get(nevernoteBasePath + 'notes?api_key=' + user.apiKey)
+      return $http.get(constants.apiBasePath + 'notes?api_key=' + user.apiKey)
         .success(function(notesData) {
           notes = notesData;
         });
@@ -49,7 +48,7 @@
     };
 
     this.create = function(note) {
-      $http.post(nevernoteBasePath + 'notes', {
+      $http.post(constants.apiBasePath + 'notes', {
         api_key: user.apiKey,
         note: {
           title: note.title,
@@ -64,7 +63,7 @@
 
     this.update = function(note) {
       var self = this;
-      return $http.put(nevernoteBasePath + 'notes/' + note.id, {
+      return $http.put(constants.apiBasePath + 'notes/' + note.id, {
         api_key: user.apiKey,
         note: {
           title: note.title,
@@ -77,7 +76,7 @@
 
     this.delete = function(note) {
       var self = this;
-      return $http.delete(nevernoteBasePath + 'notes/' + note.id + '?api_key=' + user.apiKey)
+      return $http.delete(constants.apiBasePath + 'notes/' + note.id + '?api_key=' + user.apiKey)
       .success(function(result) {
         self.removeNote(note);
       });
