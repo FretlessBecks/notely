@@ -20,7 +20,7 @@
       }, true)[0] || {});
 
       return angular.copy(note);
-    }
+    };
 
     this.fetchNotes = function() {
       return $http.get(nevernoteBasePath + 'notes?api_key=' + user.apiKey)
