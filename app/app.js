@@ -1,5 +1,6 @@
 (function() {
-  var app = angular.module('notely', [
+  console.log('ES6, yo')
+  let app = angular.module('notely', [
     'ui.router',
     'notely.notes',
     'notely.notes.service',
