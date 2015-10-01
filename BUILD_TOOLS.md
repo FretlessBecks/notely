@@ -90,6 +90,8 @@ import './directives/bd-user-links.js'
 import './directives/bd-notes-list.js'
 ```
 
+Now, in other files, you can explitly import their dependencies, so we could refactor this, so perhaps we could only load `notes.js` and `login.js` here, and in those files, import only the things they need, and setup module exports if necessary.
+
 If things are working, lets try to use some ES6 features to make sure this is working:
 __app/app.js__
 ```js
