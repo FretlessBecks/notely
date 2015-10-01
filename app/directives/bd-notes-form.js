@@ -4,7 +4,33 @@ angular.module('notely').directive('bdNotesForm', () =>{
     controller: NotesFormController,
     controllerAs: 'notesForm',
     bindToController: true,
-    templateUrl: '/notes/notes-form.html'
+    template: `
+      <form ng-submit="notesForm.save()">
+        <p>
+          <input type="text" name="title" id="note_title" placeholder="Title your note"
+          ng-model="notesForm.note.title"
+          bd-focus>
+        </p>
+        <p>
+          <text-angular
+            name="body_html"
+            placeholder="Just start typing..."
+            ng-model="notesForm.note.body_html"
+            ta-toolbar="[
+              ['bold', 'italics', 'underline'],
+              ['ul', 'ol', 'indent', 'outdent'],
+              ['html'],
+              ['insertLink']]"
+          ></text-angular>
+        </p>
+        <div class="form-actions">
+          <input type="submit" name="commit" value="{{ notesForm.buttonText() }}" class="btn btn-default">
+          <a ng-show="notesForm.note.id" ng-click="notesForm.delete()">
+            <i class="fa fa-trash-o"></i>
+          </a>
+        </div>
+      </form>
+    `
   }
 })
 
