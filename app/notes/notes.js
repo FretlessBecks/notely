@@ -1,3 +1,4 @@
+import '../directives/bd-notes'
 import '../directives/bd-notes-form'
 
 (function() {
@@ -35,7 +36,7 @@ import '../directives/bd-notes-form'
             return deferred.promise;
           }
         },
-        templateUrl: '/notes/notes.html'
+        template: '<bd-notes></bd-notes>'
       })
 
       .state('notes.form', {
