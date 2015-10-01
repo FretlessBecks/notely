@@ -5,32 +5,36 @@ angular.module('notely').directive('bdNotesForm', () =>{
   }
 })
 
-NotesFormController['$inject'] = ['$scope', '$state', 'notes'];
-function NotesFormController($scope, $state, notes) {
-  $scope.note = notes.findById($state.params.noteId);
+class NotesFormController {
+  constructor($state, notes) {
+    this.$state = $state
+    this.notes = notes
+    this.note = this.notes.findById(this.$state.params.noteId);
+  }
 
-  $scope.buttonText = function() {
-    if ($scope.note.id) {
+  buttonText() {
+    if (this.note.id) {
       return 'Save Changes';
     }
     return 'Save';
   }
 
-  $scope.save = function() {
+  save() {
     if ($scope.note.id) {
-      notes.update($scope.note).success(function(data) {
-        $scope.note = data.note;
+      this.notes.update($scope.note).success((data) => {
+        this.note = data.note;
       });
     }
     else {
-      notes.create($scope.note);
+      this.notes.create(this.note);
     }
   }
 
-  $scope.delete = function() {
-    notes.delete($scope.note)
-    .success(function() {
-      $state.go('notes.form', { noteId: undefined });
+  delete() {
+    this.notes.delete(this.note)
+    .success(() => {
+      this.$state.go('notes.form', { noteId: undefined });
     });
   }
 }
+NotesFormController.$inject = ['$state', 'notes'];
