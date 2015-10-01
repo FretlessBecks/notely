@@ -1,40 +1,47 @@
-angular.module('notely')
-.directive('bdNoteForm', () => {
-  return {
-    scope: {},
-    controller: NotesFormController,
-    controllerAs: 'ctrl',
-    bindToController: true,
-    templateUrl: '/notes/notes-form.html'
-  }
-})
-
-NotesFormController['$inject'] = ['$scope', '$state', 'notes'];
-function NotesFormController($scope, $state, notes) {
-  $scope.note = notes.findById($state.params.noteId);
-
-  $scope.buttonText = function() {
-    if ($scope.note.id) {
-      return 'Save Changes';
+{
+  angular.module('notely')
+  .directive('bdNoteForm', () => {
+    return {
+      scope: {},
+      controller: NotesFormController,
+      controllerAs: 'form',
+      bindToController: true,
+      templateUrl: '/notes/notes-form.html'
     }
-    return 'Save';
-  }
+  })
 
-  $scope.save = function() {
-    if ($scope.note.id) {
-      notes.update($scope.note).success(function(data) {
-        $scope.note = data.note;
+  class NotesFormController {
+
+    constructor($state, notes) {
+      this.$state = $state;
+      this.notes = notes;
+      this.note = this.notes.findById(this.$state.params.noteId);
+    }
+
+    buttonText() {
+      if (this.note.id) {
+        return 'Save Changes';
+      }
+      return 'Save';
+    }
+
+    save() {
+      if (this.note.id) {
+        this.notes.update(this.note).success((data) => {
+          this.note = data.note;
+        });
+      }
+      else {
+        this.notes.create(this.note);
+      }
+    }
+
+    delete() {
+      this.notes.delete(this.note)
+      .success(() => {
+        this.$state.go('notes.form', { noteId: undefined });
       });
     }
-    else {
-      notes.create($scope.note);
-    }
   }
-
-  $scope.delete = function() {
-    notes.delete($scope.note)
-    .success(function() {
-      $state.go('notes.form', { noteId: undefined });
-    });
-  }
+  NotesFormController.$inject = ['$state', 'notes'];
 }
