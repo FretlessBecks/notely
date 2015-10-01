@@ -3,38 +3,42 @@ angular.module('notely')
   return {
     scope: {},
     controller: NotesFormController,
-    controllerAs: 'ctrl',
+    controllerAs: 'form',
     bindToController: true,
     templateUrl: '/notes/notes-form.html'
   }
-})
+});
 
-NotesFormController['$inject'] = ['$scope', '$state', 'notes'];
-function NotesFormController($scope, $state, notes) {
-  $scope.note = notes.findById($state.params.noteId);
+class NotesFormController {
 
-  $scope.buttonText = function() {
-    if ($scope.note.id) {
+  constructor($state, notes) {
+    this.$state = $state;
+    this.notes = notes;
+    this.note = this.notes.findById(this.$state.params.noteId);
+  }
+
+  buttonText() {
+    if (this.note.id) {
       return 'Save Changes';
     }
     return 'Save';
   }
 
-  $scope.save = function() {
-    if ($scope.note.id) {
-      notes.update($scope.note).success(function(data) {
-        $scope.note = data.note;
+  save() {
+    if (this.note.id) {
+      this.notes.update(this.note).success((data) => {
+        this.note = data.note;
       });
     }
     else {
-      notes.create($scope.note);
+      this.notes.create(this.note);
     }
   }
 
-  $scope.delete = function() {
-    notes.delete($scope.note)
+  delete() {
+    this.notes.delete(this.note)
     .success(function() {
-      $state.go('notes.form', { noteId: undefined });
+      this.$state.go('notes.form', { noteId: undefined });
     });
   }
 }
