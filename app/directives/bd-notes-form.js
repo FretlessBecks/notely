@@ -1,6 +1,9 @@
 angular.module('notely').directive('bdNotesForm', () =>{
   return {
+    scope: {},
     controller: NotesFormController,
+    controllerAs: 'notesForm',
+    bindToController: true,
     templateUrl: '/notes/notes-form.html'
   }
 })
