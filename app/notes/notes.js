@@ -1,4 +1,5 @@
 import '../directives/bd-note-form'
+import '../directives/bd-notes'
 
 (function() {
   angular.module('notely.notes', [
@@ -35,7 +36,7 @@ import '../directives/bd-note-form'
             return deferred.promise;
           }
         },
-        templateUrl: '/notes/notes.html'
+        template: '<bd-notes></bd-notes>'
       })
 
       .state('notes.form', {
