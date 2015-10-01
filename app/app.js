@@ -1,4 +1,6 @@
 (function() {
+
+  console.log('hello2')
   var app = angular.module('notely', [
     'ui.router',
     'notely.notes',
