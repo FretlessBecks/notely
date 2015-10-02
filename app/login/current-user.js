@@ -1,23 +1,25 @@
-(function() {
-  angular.module('notely.login')
-    .service('CurrentUser', CurrentUser);
+angular.module('notely.login')
+  .service('CurrentUser', ['$window', ($window) => {
 
-  CurrentUser['$inject'] = ['$window']
-  function CurrentUser($window) {
-    var currentUser = JSON.parse($window.localStorage.getItem('currentUser'));
-
-    this.set = function(user) {
-      currentUser = user;
-      $window.localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  class CurrentUser {
+    constructor() {
+      this.currentUser = JSON.parse($window.localStorage.getItem('currentUser'));
     }
 
-    this.get = function() {
-      return currentUser || {};
+    set(user) {
+      this.currentUser = user;
+      $window.localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
     }
 
-    this.clear = function() {
-      currentUser = undefined;
+    get() {
+      return this.currentUser || {};
+    }
+
+    clear() {
+      this.currentUser = undefined;
       $window.localStorage.removeItem('currentUser');
     }
   }
-})();
+  return new CurrentUser();
+
+}]);
