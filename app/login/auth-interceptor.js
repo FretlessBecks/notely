@@ -16,7 +16,7 @@
   }
 
   angular.module('notely')
-    .config(function($httpProvider) {
+    .config(['$httpProvider', function($httpProvider) {
       return $httpProvider.interceptors.push('AuthInterceptor');
-    });
+    }]);
 })();
